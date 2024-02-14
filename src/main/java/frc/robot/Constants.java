@@ -32,9 +32,10 @@ public class Constants {
 
     public static class CAN {
         public static class SparkMax {
+            public static final int INDEXER_PORT = 58; // TODO assign actual port
             public static final int SHOOTER_PORT = 59; // TODO assign actual port
             public static final int CLIMBER_PORT = 60; // TODO assign actual port
-            public static final int AMP_WHEEL_PORT = 61; // TODO assign actual port
+            public static final int INTAKE_PORT = 61; // TODO assign actual port
         }
     }
     

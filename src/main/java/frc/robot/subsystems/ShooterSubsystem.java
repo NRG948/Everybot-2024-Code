@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void runLaunchMotor(double power) {
     isEnabled = true;
-    launchWheel.set(power);
+    launchWheel.setVoltage(power);
   }
 
   /**
