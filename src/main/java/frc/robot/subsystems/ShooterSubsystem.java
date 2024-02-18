@@ -23,8 +23,8 @@ public class ShooterSubsystem extends SubsystemBase {
   static final double FEEDER_IN_SPEED = -.4; // % output
   static final double LAUNCHER_SPEED = 1.0; // % output
 
-  private final CANSparkBase launchWheel = new CANSparkMax(Constants.CAN.SparkMax.SHOOTER_PORT, MotorType.kBrushless);
-  private final CANSparkBase feedWheel = new CANSparkMax(Constants.CAN.SparkMax.INDEXER_PORT, MotorType.kBrushless);
+  private final CANSparkBase launchWheel = new CANSparkMax(Constants.RobotConstants.CAN.SparkMax.SHOOTER_PORT, MotorType.kBrushless);
+  private final CANSparkBase feedWheel = new CANSparkMax(Constants.RobotConstants.CAN.SparkMax.INDEXER_PORT, MotorType.kBrushless);
 
   public ShooterSubsystem() {
     launchWheel.setIdleMode(IdleMode.kBrake);
