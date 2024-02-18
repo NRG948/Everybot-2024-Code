@@ -78,6 +78,10 @@ public class OldRobot extends TimedRobot {
    *
    * Buttons index from 0
    */
+  Joystick m_driverController = new Joystick(0);
+
+
+  Joystick m_manipController = new Joystick(1);
 
 
   // --------------- Magic numbers. Use these to adjust settings. ---------------
@@ -90,7 +94,7 @@ public class OldRobot extends TimedRobot {
   /**
    * How many amps the feeder motor can use.
    */
-  static final int FEEDER_CURRENT_LIMIT_A = 80;
+  static final int FEEDER_CURRENT_LIMIT_A = 60;
 
   /**
    * Percent output to run the feeder when expelling note
@@ -112,7 +116,7 @@ public class OldRobot extends TimedRobot {
    *
    * In our testing we favored the CIM over NEO, if using a NEO lower this to 60
    */
-  static final int LAUNCHER_CURRENT_LIMIT_A = 80;
+  static final int LAUNCHER_CURRENT_LIMIT_A = 60;
 
   /**
    * Percent output to run the launcher when intaking AND expelling note
