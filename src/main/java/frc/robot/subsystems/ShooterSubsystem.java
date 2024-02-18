@@ -9,8 +9,13 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.ShootUsingController;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new Shooter. */
@@ -18,6 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private boolean isEnabled = false;
   private double feedMotorPower;
   private double launchMotorPower;
+  private double shooterPower; // % output
 
   static final double FEEDER_OUT_SPEED = 1.0; // % output
   static final double FEEDER_IN_SPEED = -.4; // % output
@@ -51,9 +57,9 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void runFeedMotor(double power) {
     isEnabled = true;
+    shooterPower = power / Constants.RobotConstants.MAX_BATTERY_VOLTAGE;
     feedWheel.set(power);
   }
-
 
   /**
    * Stops the launch wheel motor
@@ -77,7 +83,6 @@ public class ShooterSubsystem extends SubsystemBase {
     stopLaunchMotor();
   }
 
-
   /**
    * Disable the intake.
    */
@@ -92,5 +97,19 @@ public class ShooterSubsystem extends SubsystemBase {
       runFeedMotor(feedMotorPower);
       runLaunchMotor(launchMotorPower);
     }
+  }
+
+  public void addShuffleboardTab() {
+    ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+    
+    ShuffleboardLayout layout = tab.getLayout("Shooter", BuiltInLayouts.kList)
+      .withPosition(0, 0)
+      .withSize(2, 3);
+
+    layout.addDouble("Current Power", () -> shooterPower);
+    layout.addDouble("Feeder In Power", () -> FEEDER_IN_SPEED);
+    layout.addDouble("Feeder Out Power", () -> FEEDER_OUT_SPEED);
+    layout.addDouble("Launcher Power", () -> LAUNCHER_SPEED);
+    layout.addDouble("Deadband", () -> ShootUsingController.DEADBAND);
   }
 }
