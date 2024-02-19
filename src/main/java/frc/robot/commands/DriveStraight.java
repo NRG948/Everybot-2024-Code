@@ -116,7 +116,7 @@ public class DriveStraight extends Command {
         () -> position.getTranslation().minus(drivetrain.getPosition().getTranslation()),
         maxSpeed,
         () -> position.getRotation(),
-        0);
+        0.8); //TODO find goal speed.
   }
 
   /**

@@ -79,9 +79,9 @@ public class RobotAutonomous {
     private static Rotation2d RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_FIRST_ORIENTATION = Rotation2d.fromDegrees(1.90);
     private static Rotation2d RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_SECOND_ORIENTATION = Rotation2d.fromDegrees(-78.41);
 
-    private static Pose2d WAYPOINT_ONE = new Pose2d(RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_FIRST_POINT,
+    private static Pose2d START_POINT = new Pose2d(RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_FIRST_POINT,
             RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_FIRST_ORIENTATION);
-    private static Pose2d WAYPOINT_TWO = new Pose2d(RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_SECOND_POINT,
+    private static Pose2d END_POINT = new Pose2d(RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_SECOND_POINT,
             RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_SECOND_ORIENTATION);
 
     public static Command getAutonomousCommand() {
@@ -97,10 +97,11 @@ public class RobotAutonomous {
             case RIGHT_SUBWOOFER_SHOT_DRIVE_OUT:
                 return new SequentialCommandGroup(
                         new InstantCommand(() -> RobotContainer.m_subsystems.drivetrain.resetOrientation()),
+                        new InstantCommand(() -> System.out.println(RobotContainer.m_subsystems.drivetrain.getOrientation())),
+                       // new InstantCommand(
+                              //  () -> new ScoreWithShooter(RobotContainer.m_subsystems.shooterSubsystem, 0.8)), // TODO: Find actual speed.
                         new InstantCommand(
-                                () -> new ScoreWithShooter(RobotContainer.m_subsystems.shooterSubsystem, 0.8)), // TODO: Find actual speed.
-                        new InstantCommand(
-                                () -> new DriveStraight(RobotContainer.m_subsystems.drivetrain, WAYPOINT_TWO, 0.8) // TODO: Find actual max speed.
+                                () -> new DriveStraight(RobotContainer.m_subsystems.drivetrain, END_POINT, 1.0) // TODO: Find actual max speed.
                         ));
 
             default:
