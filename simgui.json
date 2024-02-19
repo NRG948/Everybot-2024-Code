@@ -1,0 +1,38 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Drive/Back Left/Rotation": "Gyro",
+      "/Shuffleboard/Drive/Back Right/Rotation": "Gyro",
+      "/Shuffleboard/Drive/Front Left/Rotation": "Gyro",
+      "/Shuffleboard/Drive/Front Right/Rotation": "Gyro",
+      "/Shuffleboard/Drive/Odometry/Orientation": "Gyro",
+      "/Shuffleboard/Operator/Autonomous/Routine": "String Chooser"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "Shuffleboard": {
+        "Drive": {
+          "open": true
+        },
+        "Operator": {
+          "Autonomous": {
+            "Routine": {
+              "open": true,
+              "string[]##v_/Shuffleboard/Operator/Autonomous/Routine/options": {
+                "open": true
+              }
+            },
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}

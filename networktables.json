@@ -1,0 +1,42 @@
+[
+  {
+    "name": "/Preferences/NoteVision/kP",
+    "type": "double",
+    "value": 0.7,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/NoteVision/kD",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Drive/Robot Base",
+    "type": "string",
+    "value": "PracticeBase2024",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Preferences/WriteDefault",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/NoteVision/kI",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  }
+]
