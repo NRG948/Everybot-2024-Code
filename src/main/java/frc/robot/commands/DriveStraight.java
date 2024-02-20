@@ -33,7 +33,8 @@ public class DriveStraight extends Command {
   private Rotation2d heading;
   private Rotation2d orientation;
   private TrapezoidProfile profile;
-  private TrapezoidProfile.State curState;
+  private TrapezoidProfile.State initialState;
+  private TrapezoidProfile.State goalState;
 
   /**
    * Creates a new DriveStraight that drives robot along the specified vector at
@@ -156,11 +157,9 @@ public class DriveStraight extends Command {
     distance = translation.getNorm();
     heading = translation.getAngle();
     orientation = orientationSupplier.get();
-    // profile = new TrapezoidProfile(
-    // new TrapezoidProfile.Constraints(maxSpeed, drivetrain.getMaxAcceleration()),
-    // new TrapezoidProfile.State(distance, goalSpeed));
     profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(maxSpeed, drivetrain.getMaxAcceleration()));
-    curState = new TrapezoidProfile.State(distance, drivetrain.getMaxAcceleration());
+    initialState = new TrapezoidProfile.State(0, 0);
+    goalState = new TrapezoidProfile.State(distance, goalSpeed);
     System.out.println(
         "BEGIN DriveStraight intitialPose = " + initialPose +
             ", orientation = " + orientation +
@@ -175,8 +174,7 @@ public class DriveStraight extends Command {
   public void execute() {
     // Calculate the next state (position and velocity) of motion using the
     // trapezoidal profile.
-    TrapezoidProfile.State state = profile.calculate(timer.get(), curState,
-        new TrapezoidProfile.State(distance, goalSpeed));
+    TrapezoidProfile.State state = profile.calculate(timer.get(), initialState, goalState);
 
     // Determine the next position on the field by offsetting the initial position
     // by the distance moved along the line of travel.
@@ -188,7 +186,6 @@ public class DriveStraight extends Command {
         drivetrain.getPosition(), nextPose, state.velocity, orientation);
 
     drivetrain.setChassisSpeeds(speeds);
-    curState = state;
   }
 
   @Override
@@ -200,6 +197,7 @@ public class DriveStraight extends Command {
   public void end(boolean interrupted) {
     drivetrain.stopMotors();
     timer.stop();
-    System.out.println("END DriveStraight finalPose = " + drivetrain.getPosition());
+    System.out.println("END DriveStraight finalPose = " + drivetrain.getPosition() +
+        ", totalTime = " + profile.totalTime());
   }
 }

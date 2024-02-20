@@ -22,7 +22,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.RobotConstants.OperatorConstants;
 import frc.robot.commands.DriveStraight;
 import frc.robot.commands.ScoreWithShooter;
 import frc.robot.subsystems.Subsystems;
@@ -84,6 +88,9 @@ public class RobotAutonomous {
     private static Pose2d END_POINT = new Pose2d(RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_SECOND_POINT,
             RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_SECOND_ORIENTATION);
 
+    public static CommandXboxController mCommandXboxController = new CommandXboxController(
+            OperatorConstants.XboxControllerPort.DRIVER);
+
     public static Command getAutonomousCommand() {
         Command autoCommand = getSelectedAutonomousCommand();
         return autoCommand;
@@ -97,12 +104,14 @@ public class RobotAutonomous {
             case RIGHT_SUBWOOFER_SHOT_DRIVE_OUT:
                 return new SequentialCommandGroup(
                         new InstantCommand(() -> RobotContainer.m_subsystems.drivetrain.resetOrientation()),
-                        new InstantCommand(() -> System.out.println(RobotContainer.m_subsystems.drivetrain.getOrientation())),
-                       // new InstantCommand(
-                              //  () -> new ScoreWithShooter(RobotContainer.m_subsystems.shooterSubsystem, 0.8)), // TODO: Find actual speed.
                         new InstantCommand(
-                                () -> new DriveStraight(RobotContainer.m_subsystems.drivetrain, END_POINT, 1.0) // TODO: Find actual max speed.
-                        ));
+                                () -> System.out.println(RobotContainer.m_subsystems.drivetrain.getOrientation())),
+                        new WaitCommand(3),
+                        new PrintCommand("hello"),
+                        // new ScoreWithShooter(RobotContainer.m_subsystems.shooterSubsystem, 0.8), // TODO: Find actual speed.
+                        new DriveStraight(RobotContainer.m_subsystems.drivetrain,
+                                RIGHT_SUBWOOFER_SHOT_DRIVE_OUT_SECOND_POINT, 1.0) // TODO: Find actual max speed.
+                );
 
             default:
                 return new InstantCommand(() -> System.out.println("Error"));
@@ -114,7 +123,7 @@ public class RobotAutonomous {
      * 
      * @param tab The tab to add the layout.
      */
-    public void addShuffleboardLayout(ShuffleboardTab tab ) {
+    public void addShuffleboardLayout(ShuffleboardTab tab) {
 
         ShuffleboardLayout autoLayout = tab.getLayout("Autonomous", BuiltInLayouts.kList)
                 .withPosition(0, 0)
